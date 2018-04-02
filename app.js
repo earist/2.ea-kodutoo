@@ -84,7 +84,7 @@ TYPER.prototype = {
   }
 }
 
-/* WORD test1 */
+/* WORD*/
 const Word = function (word, canvas, ctx) {
   this.word = word
   this.left = this.word
