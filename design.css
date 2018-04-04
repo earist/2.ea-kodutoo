@@ -1,0 +1,36 @@
+.container{
+	position: absolute;
+	bottom: 50px;
+	right: 50px;
+}
+
+.btn_night{
+	background: #474c4f;
+	background-image: linear-gradient(to bottom, #474c4f, #000000);
+	font-family: Courier;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
+	margin: 10px;
+	outline: none;
+}
+
+.btn_day{
+	background: #ffffff;
+	background-image: linear-gradient(to bottom, #ffffff, #d1cdd1);
+	font-family: Courier;
+	color: #000000;
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
+	outline: none;
+}
+
+.day{
+	background: #ffffff;
+	background-image: linear-gradient(to bottom, #ffffff, #d1cdd1);
+}
+
+.night{
+	background: #474c4f;
+	background-image: linear-gradient(to bottom, #474c4f, #000000);
+}

@@ -124,3 +124,12 @@ window.onload = function () {
   const typer = new TYPER()
   window.typer = typer
 }
+
+/*Day-night*/
+function nightOn(){
+	body.className = "night";
+}
+
+function dayOn(){
+	body.className = "day";
+}
