@@ -22,6 +22,21 @@
     <script src="app.js"></script>
   </head>
   <body>
+    <div id="description">
+      <h1>SÕNAMÄNG</h1>
+        <p>Mängu ülesanne on võimalikult kiiresti näppe liigutada ehk siis nii kiiresti kui võimalik,
+            ilma eksimusteta, kribada ekraanil kuvatud sõna. </p>
+      <br>
+        <p>Elusid on nagu kassil = 9, ning raskusastme valkust sõltub,
+                kui palju aega sulle ühe sõna kirjutamiseks antakse.</p>
+    </div>
+    <div id="playerName">
+      <input id="nameField" type="text" placeholder="Sisesta nimi">
+      <br>
+      <button onclick="startGame()">LIHTNE</button>
+      <button onclick="startGame()">KESKMNE</button>
+      <button onclick="startGame()">RASKE</button>
+    </div>  
     <canvas></canvas>
     <div class="container">
       <button type="button" class="btn_night" onclick= "nightOn();">NIGHT</button>
