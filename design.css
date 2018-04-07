@@ -1,5 +1,6 @@
 /* NIMI & ESILEHT */
 
+
 p {
     text-align: center;
     font-family: Courier;
@@ -10,6 +11,16 @@ p {
     margin-right: 50px;
 }
 
+h1 {
+	top: 90px;
+   text-align: center;
+   font-family: Courier;
+   font-size: 140px;
+   color: black;
+   text-transform: uppercase;
+   position: relative;
+
+}
 
 button {
     font-family: Courier;
@@ -28,17 +39,6 @@ input {
                 
 }
 
-
-h1 {
- 	top: 90px;
-	text-align: center;
-	font-family: Courier;
-	font-size: 140px;
-	color: black;
-	text-transform: uppercase;
-	position: relative;
-
-}
 
 span {
   border-right: .05em solid;
