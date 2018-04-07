@@ -15,7 +15,7 @@ const TYPER = function () {
   this.wordMinLength = 5
   this.guessedWords = 0
 
-  this.init()
+  //this.init()
 }
 
 window.TYPER = TYPER
@@ -107,6 +107,35 @@ Word.prototype = {
 }
 
 /* HELPERS */
+
+//copied from : https://github.com/nsalong/2.ea-kodutoo/blob/master/app.js#L301
+function saveScore (playerName, playerScore) {
+  arr = []
+  if (window.localStorage.length == 0) {
+      player = [playerName,playerScore]
+      arr.push(player)
+      localStorage.setItem('arr', JSON.stringify(arr))
+  } else {
+      let stored = JSON.parse(localStorage.getItem('arr'))
+      let player2 = [playerName,playerScore]
+      stored.push(player2)
+
+      //sort
+      let length = stored.length
+      for (let i=0; i<length; i++) {
+          for (let j=0; j<(length-i-1); j++) {
+              if (stored[j][1] < stored[j+1][1]) {
+                  let tmp = stored[j]
+                  stored[j] = stored[j+1]
+                  stored[j+1] = tmp
+              }
+          }
+      }
+
+      localStorage.setItem('arr', JSON.stringify(stored))
+  }
+}
+
 function structureArrayByWordLength (words) {
   let tempArray = []
 
@@ -120,10 +149,6 @@ function structureArrayByWordLength (words) {
   return tempArray
 }
 
-window.onload = function () {
-  const typer = new TYPER()
-  window.typer = typer
-}
 
 /*Day-night*/
 function nightOn(){
