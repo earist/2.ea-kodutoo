@@ -1,21 +1,14 @@
-.container{
+/*.container{
 	position: absolute;
 	bottom: 50px;
 	right: 50px;
-}
+}*/
 
-.btn_night{
-	background: #474c4f;
-	background-image: linear-gradient(to bottom, #474c4f, #000000);
-	font-family: Courier;
-	color: #ffffff;
-	font-size: 20px;
-	padding: 10px 20px 10px 20px;
-	margin: 10px;
-	outline: none;
-}
 
-.btn_day{
+.btn{
+	position: absolute;
+	bottom: 50px;
+	right: 50px;
 	background: #ffffff;
 	background-image: linear-gradient(to bottom, #ffffff, #d1cdd1);
 	font-family: Courier;
@@ -25,12 +18,35 @@
 	outline: none;
 }
 
-.day{
-	background: #ffffff;
-	background-image: linear-gradient(to bottom, #ffffff, #d1cdd1);
-}
 
-.night{
+body.dark-mode {
 	background: #474c4f;
 	background-image: linear-gradient(to bottom, #474c4f, #000000);
+	color: #ffffff;
+}
+
+body.dark-mode button {
+	background: #ffffff;
+	background-image: linear-gradient(to bottom, #ffffff, #d1cdd1);
+	font-family: Courier;
+	color: #000000;
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
+	outline: none;
+}
+
+body.light-mode {
+	background: #ffffff;
+	background-image: linear-gradient(to bottom, #ffffff, #d1cdd1);
+	color: #000000;
+}
+
+body.light-mode button {
+	background: #474c4f;
+	background-image: linear-gradient(to bottom, #474c4f, #000000);
+	font-family: Courier;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
+	outline: none;
 }

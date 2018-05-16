@@ -32,6 +32,8 @@ TYPER.prototype = {
     this.canvas.height = this.HEIGHT * 2
 
     this.loadWords()
+    //this.registerServiceWorker()
+
   },
 
   loadWords: function () {
@@ -83,8 +85,14 @@ TYPER.prototype = {
     }
   }
 }
+/*Day-night*/
+function changeMode() {
+  var body = document.getElementById("body");
+  var currentClass = body.className;
+  body.className = currentClass == "dark-mode" ? "light-mode" : "dark-mode";
+}
 
-/* WORD*/
+/* WORD */
 const Word = function (word, canvas, ctx) {
   this.word = word
   this.left = this.word
@@ -94,12 +102,22 @@ const Word = function (word, canvas, ctx) {
 
 Word.prototype = {
   Draw: function () {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
-    this.ctx.textAlign = 'center'
-    this.ctx.font = '140px Courier'
-    this.ctx.fillText(this.left, this.canvas.width / 2, this.canvas.height / 2)
-  },
+		if (changeMode.currentClass == "light-mode"){
+			console.log('siin')
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+			this.ctx.textAlign = 'center'
+			this.ctx.font = '140px Courier'
+			this.ctx.fillStyle = '#000000'
+			this.ctx.fillText(this.left, this.canvas.width / 2, this.canvas.height / 2)
+		} else {
+			console.log('siin2')
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+			this.ctx.textAlign = 'center'
+			this.ctx.font = '140px Courier'
+			this.ctx.fillStyle = '#ffffff'
+			this.ctx.fillText(this.left, this.canvas.width / 2, this.canvas.height / 2)
+		}
+ },
 
   removeFirstLetter: function () {
     this.left = this.left.slice(1)
@@ -119,17 +137,21 @@ function structureArrayByWordLength (words) {
 
   return tempArray
 }
+/*
+registerServiceWorker: function () {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceWorker.js').then(function (registration) {
+          // Registration was successful
+          console.log('ServiceWorker registration successful: ', registration)
+        }, function (err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err)
+        })
+      }
+    }*/
 
 window.onload = function () {
   const typer = new TYPER()
   window.typer = typer
-}
+  }
 
-/*Day-night*/
-function nightOn(){
-	body.className = "night";
-}
-
-function dayOn(){
-	body.className = "day";
-}

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>typer</title>
-    <link rel="stylesheet" type="text/css" href="design.css">
+	<link rel="stylesheet" type="text/css" href="design.css">
     <style> 
       * {
         margin: 0;
@@ -21,10 +21,12 @@
     </style>
     <script src="app.js"></script>
   </head>
-  <body>
+  <body id="body" class="dark-mode">
     <canvas></canvas>
-    <div class="container">
-      <button type="button" class="btn_night" onclick= "nightOn();">NIGHT</button>
-      <button type="button" class="btn_day" onclick= "dayOn();">DAY</button>
+	<!--<div class="container">
+		<button type="button" class="btn_night" onclick= "nightOn();">NIGHT</button>
+		<button type="button" class="btn_day" onclick= "dayOn();">DAY</button>
+	</div>-->
+	<button type="button" class="btn" name="night_mode" onclick="changeMode()" title="Switch mode">Day/night mode</button>
   </body>
 </html>
