@@ -32,7 +32,7 @@ TYPER.prototype = {
     this.canvas.height = this.HEIGHT * 2
 
     this.loadWords()
-    //this.registerServiceWorker()
+    
 
   },
 
