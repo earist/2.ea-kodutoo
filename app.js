@@ -78,9 +78,13 @@ TYPER.prototype = {
 
     if (letter === this.word.left.charAt(0)) {
       this.word.removeFirstLetter()
+      this.score += 2
 
       if (this.word.left.length === 0) {
         this.guessedWords += 1
+        if(this.guessedWords % 5 === 0){
+          this.score += 25
+        }
 
         this.generateWord()
       }
@@ -88,6 +92,7 @@ TYPER.prototype = {
       this.word.Draw()
     } else {
       this.lives -= 1
+      this.score -= 1
       console.log(this.lives)
 
     if(this.lives == 0){
@@ -115,6 +120,10 @@ Word.prototype = {
     this.ctx.textAlign = 'center'
     this.ctx.font = '140px Courier'
     this.ctx.fillText(this.left, this.canvas.width / 2, this.canvas.height / 2)
+
+    this.ctx.textAlign = 'right'
+    this.ctx.font = '80px Courier'
+    this.ctx.fillText('Skoor: '+ typer.score, this.canvas.width-500, 100)
   },
 
   drawTimer: function () {
