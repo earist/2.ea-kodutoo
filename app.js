@@ -14,6 +14,11 @@ const TYPER = function () {
   this.word = null
   this.wordMinLength = 5
   this.guessedWords = 0
+  this.score = 0
+  this.lives = 10
+  this.timeLeft = timeValue
+  this.time = this.timeLeft
+
 
   //this.init()
 }
@@ -55,20 +60,21 @@ TYPER.prototype = {
   start: function () {
     this.generateWord()
     this.word.Draw()
-
     window.addEventListener('keypress', this.keyPressed.bind(this))
+    gameTimer()
   },
 
   generateWord: function () {
     const generatedWordLength = this.wordMinLength + parseInt(this.guessedWords / 5)
     const randomIndex = (Math.random() * (this.words[generatedWordLength].length - 1)).toFixed()
     const wordFromArray = this.words[generatedWordLength][randomIndex]
-
+    console.log(timeValue)
     this.word = new Word(wordFromArray, this.canvas, this.ctx)
   },
 
   keyPressed: function (event) {
     const letter = String.fromCharCode(event.which)
+    console.log(this.lives)
 
     if (letter === this.word.left.charAt(0)) {
       this.word.removeFirstLetter()
@@ -80,6 +86,16 @@ TYPER.prototype = {
       }
 
       this.word.Draw()
+    } else {
+      this.lives -= 1
+      console.log(this.lives)
+
+    if(this.lives == 0){
+      //GO BACK TO HOMEPAGE
+      console.log("elud said otsa")
+      window.location.reload();
+
+    }
     }
   }
 }
@@ -101,9 +117,18 @@ Word.prototype = {
     this.ctx.fillText(this.left, this.canvas.width / 2, this.canvas.height / 2)
   },
 
+  drawTimer: function () {
+    this.ctx.clearRect(this.canvas.width-450, 0, 450, this.canvas.height)
+    this.ctx.textAlign = 'right'
+    this.ctx.font = '80px Courier'
+    this.ctx.fillText('Aeg: '+ typer.time, this.canvas.width-50, 100)
+  },
+
   removeFirstLetter: function () {
     this.left = this.left.slice(1)
   }
+
+  
 }
 
 /* HELPERS */
@@ -123,6 +148,25 @@ function structureArrayByWordLength (words) {
 }
 
 
+///COPY PASTE
+function gameTimer () {
+  (function timer1() {
+      if (typer.time >= 0) {
+          typer.word.drawTimer()
+          typer.time -= 1
+          setTimeout(timer1, 1000)
+      } else {
+          endGame()
+      }
+  })();
+}
+
+function endGame () {
+  window.location.reload();
+  //MÄNGU LÕPP
+}
+///KUNI SIIANI HETKEL
+
 /*Day-night*/
 function nightOn(){
 	body.className = "night";
@@ -134,11 +178,13 @@ function dayOn(){
 
 /* START & NIMI  */
 let name = ""
-function startGame () {
+function startGameEasy () {
 
     if (document.querySelector('#nameField').value != "") {
         name = document.querySelector('#nameField').value
         document.querySelector('body').innerHTML = "<canvas></canvas>"
+        this.timeValue = 100
+        console.log(timeValue)
         const typer = new TYPER()
         window.typer = typer
         typer.init()
@@ -146,6 +192,35 @@ function startGame () {
         alert("Palun sisesta mängimiseks oma nimi.")
     }
 }
+
+function startGameMedium () {
+
+  if (document.querySelector('#nameField').value != "") {
+      name = document.querySelector('#nameField').value
+      document.querySelector('body').innerHTML = "<canvas></canvas>"
+      this.timeValue = 70
+      const typer = new TYPER()
+      window.typer = typer
+      typer.init()
+  } else {
+      alert("Palun sisesta mängimiseks oma nimi.")
+  }
+}
+
+function startGameHard () {
+
+  if (document.querySelector('#nameField').value != "") {
+      name = document.querySelector('#nameField').value
+      document.querySelector('body').innerHTML = "<canvas></canvas>"
+      this.timeValue = 50
+      const typer = new TYPER()
+      window.typer = typer
+      typer.init()
+  } else {
+      alert("Palun sisesta mängimiseks oma nimi.")
+  }
+}
+
 
 /* HEADER efect */
 
@@ -180,7 +255,7 @@ document.addEventListener('DOMContentLoaded',function(event){
         }, 20000);
      }
      // check if dataText[i] exists
-    if (i < dataText[i].length) {
+    if (i < dataText.length) {
       // text exists! start typewriter animation
      typeWriter(dataText[i], 0, function(){
        // after callback (and whole text has been animated), start next text

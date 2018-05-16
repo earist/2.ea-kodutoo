@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>typer</title>
     <link rel="stylesheet" type="text/css" href="design.css">
+    <script src="app.js"></script>
     <style> 
       * {
         margin: 0;
@@ -19,7 +20,6 @@
         position: absolute;
       }
     </style>
-    <script src="app.js"></script>
   </head>
   <body>
     <div id="description">
@@ -33,9 +33,9 @@
     <div id="playerName">
       <input id="nameField" type="text" placeholder="Sisesta nimi">
       <br>
-      <button onclick="startGame()">LIHTNE</button>
-      <button onclick="startGame()">KESKMNE</button>
-      <button onclick="startGame()">RASKE</button>
-    </div>  
+      <button onclick="startGameEasy()">LIHTNE</button>
+      <button onclick="startGameMedium()">KESKMNE</button>
+      <button onclick="startGameHard()">RASKE</button>
+    </div>
   </body>
 </html>
