@@ -15,8 +15,12 @@ const TYPER = function () {
   this.word = null
   this.wordMinLength = 5
   this.guessedWords = 0
+  this.score = 0
+  this.lives = 10
+  this.timeLeft = timeValue
+  this.time = this.timeLeft
 
-  this.init()
+  // this.init()
 }
 
 window.TYPER = TYPER
@@ -33,6 +37,7 @@ TYPER.prototype = {
     this.canvas.height = this.HEIGHT * 2
 
     this.loadWords()
+
     // this.registerServiceWorker()
   },
 
@@ -43,9 +48,10 @@ TYPER.prototype = {
       if (xmlhttp.readyState === 4 && (xmlhttp.status === 200 || xmlhttp.status === 0)) {
         const response = xmlhttp.responseText
         const wordsFromFile = response.split('\n')
-        typer.words = structureArrayByWordLength(wordsFromFile)
 
-        typer.start()
+        TYPER.instance_.words = structureArrayByWordLength(wordsFromFile)
+
+        TYPER.instance_.start()
       }
     }
 
@@ -56,38 +62,53 @@ TYPER.prototype = {
   start: function () {
     this.generateWord()
     this.word.Draw()
-
     window.addEventListener('keypress', this.keyPressed.bind(this))
+    gameTimer()
   },
 
   generateWord: function () {
     const generatedWordLength = this.wordMinLength + parseInt(this.guessedWords / 5)
     const randomIndex = (Math.random() * (this.words[generatedWordLength].length - 1)).toFixed()
     const wordFromArray = this.words[generatedWordLength][randomIndex]
-
+    console.log(timeValue)
     this.word = new Word(wordFromArray, this.canvas, this.ctx)
   },
 
   keyPressed: function (event) {
     const letter = String.fromCharCode(event.which)
+    console.log(this.lives)
 
     if (letter === this.word.left.charAt(0)) {
       this.word.removeFirstLetter()
+      this.score += 2
 
       if (this.word.left.length === 0) {
         this.guessedWords += 1
+        if (this.guessedWords % 5 === 0) {
+          this.score += 25
+        }
 
         this.generateWord()
       }
 
       this.word.Draw()
+    } else {
+      this.lives -= 1
+      this.score -= 1
+      console.log(this.lives)
+
+      if (this.lives === 0) {
+      // GO BACK TO HOMEPAGE
+        console.log('elud said otsa')
+        window.location.reload()
+      }
     }
   }
 }
 /* Day-night */
 function changeMode () {
-  let body = document.getElementById('body')
-  let currentClass = body.className
+  var body = document.getElementById('body')
+  var currentClass = body.className
   body.className = currentClass === 'dark-mode' ? 'light-mode' : 'dark-mode'
   console.log(currentClass)
 }
@@ -108,14 +129,27 @@ Word.prototype = {
     this.ctx.font = '140px Courier'
     this.ctx.fillStyle = '#BF7F7F'
     this.ctx.fillText(this.left, this.canvas.width / 2, this.canvas.height / 2)
+
+    this.ctx.textAlign = 'right'
+    this.ctx.font = '80px Courier'
+    this.ctx.fillText('Skoor: ' + TYPER.instance_.score, this.canvas.width - 500, 100)
+  },
+
+  drawTimer: function () {
+    this.ctx.clearRect(this.canvas.width - 450, 0, 450, this.canvas.height)
+    this.ctx.textAlign = 'right'
+    this.ctx.font = '80px Courier'
+    this.ctx.fillText('Aeg: ' + TYPER.instance_.time, this.canvas.width - 50, 100)
   },
 
   removeFirstLetter: function () {
     this.left = this.left.slice(1)
   }
+
 }
 
 /* HELPERS */
+
 function structureArrayByWordLength (words) {
   let tempArray = []
 
@@ -141,7 +175,106 @@ registerServiceWorker: function () {
       }
     } */
 
-window.onload = function () {
-  const typer = new TYPER()
-  window.typer = typer
+function gameTimer () {
+  (function timer1 () {
+    if (typer.time >= 0) {
+      typer.word.drawTimer()
+      typer.time -= 1
+      setTimeout(timer1, 1000)
+    } else {
+      endGame()
+    }
+  })()
 }
+
+function endGame () {
+  window.location.reload()
+  // MÄNGU LÕPP
+}
+
+/* START & NIMI  */
+let name = ''
+function startGameEasy () {
+  if (document.querySelector('#nameField').value !== '') {
+    name = document.querySelector('#nameField').value
+    document.querySelector('body').innerHTML = '<canvas></canvas>'
+    this.timeValue = 100
+    console.log(timeValue)
+    const typer = new TYPER()
+    window.typer = typer
+    typer.init()
+  } else {
+    alert('Palun sisesta mängimiseks oma nimi.')
+  }
+}
+
+function startGameMedium () {
+  if (document.querySelector('#nameField').value !== '') {
+    name = document.querySelector('#nameField').value
+    document.querySelector('body').innerHTML = '<canvas></canvas>'
+    this.timeValue = 70
+    const typer = new TYPER()
+    window.typer = typer
+    typer.init()
+  } else {
+    alert('Palun sisesta mängimiseks oma nimi.')
+  }
+}
+
+function startGameHard () {
+  if (document.querySelector('#nameField').value !== '') {
+    name = document.querySelector('#nameField').value
+    document.querySelector('body').innerHTML = '<canvas></canvas>'
+    this.timeValue = 50
+    const typer = new TYPER()
+    window.typer = typer
+    typer.init()
+  } else {
+    alert('Palun sisesta mängimiseks oma nimi.')
+  }
+}
+
+/* HEADER efect */
+
+document.addEventListener('DOMContentLoaded', function (event) {
+  // array with texts to type in typewriter
+  var dataText = ['SÕNAMÄNG']
+
+  // type one text in the typwriter
+  // keeps calling itself until the text is finished
+  function typeWriter (text, i, fnCallback) {
+    // chekc if text isn't finished yet
+    if (i < (text.length)) {
+      // add next character to h1
+      document.querySelector('h1').innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>'
+
+      // wait for a while and call this function again for next character
+      setTimeout(function () {
+        typeWriter(text, i + 1, fnCallback)
+      }, 100)
+    }
+    // text finished, call callback if there is a callback function
+    else if (typeof fnCallback === 'function') {
+      // call callback after timeout
+      setTimeout(fnCallback, 700)
+    }
+  }
+  // start a typewriter animation for a text in the dataText array
+  function StartTextAnimation (i) {
+    if (typeof dataText[i] === 'undefined') {
+      setTimeout(function () {
+        StartTextAnimation(0)
+      }, 20000)
+    }
+    // check if dataText[i] exists
+    if (i < dataText.length) {
+      // text exists! start typewriter animation
+      typeWriter(dataText[i], 0, function () {
+        // after callback (and whole text has been animated), start next text
+        StartTextAnimation(i + 1)
+      })
+    }
+  }
+  // start the text animation
+  StartTextAnimation(0)
+})
