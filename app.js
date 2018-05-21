@@ -1,4 +1,5 @@
 /* TYPER */
+let typer
 const TYPER = function () {
   if (TYPER.instance_) {
     return TYPER.instance_
@@ -32,7 +33,6 @@ TYPER.prototype = {
     this.canvas.height = this.HEIGHT * 2
 
     this.loadWords()
-
     // this.registerServiceWorker()
   },
 
@@ -43,7 +43,6 @@ TYPER.prototype = {
       if (xmlhttp.readyState === 4 && (xmlhttp.status === 200 || xmlhttp.status === 0)) {
         const response = xmlhttp.responseText
         const wordsFromFile = response.split('\n')
-
         typer.words = structureArrayByWordLength(wordsFromFile)
 
         typer.start()
@@ -87,8 +86,8 @@ TYPER.prototype = {
 }
 /* Day-night */
 function changeMode () {
-  var body = document.getElementById('body')
-  var currentClass = body.className
+  let body = document.getElementById('body')
+  let currentClass = body.className
   body.className = currentClass === 'dark-mode' ? 'light-mode' : 'dark-mode'
   console.log(currentClass)
 }
