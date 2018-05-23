@@ -1,6 +1,6 @@
 /* TYPER */
+let typer
 
-let leaderboard
 const TYPER = function () {
   if (TYPER.instance_) {
     return TYPER.instance_
