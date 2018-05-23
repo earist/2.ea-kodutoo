@@ -23,12 +23,14 @@
   </head>
   <body id="body" class="light-mode">
     <div id="description">
-      <h1>SÕNAMÄNG</h1>
+	<canvas></canvas>
+      <h1 id="h11">SÕNAMÄNG</h1>
         <p>Mängu ülesanne on võimalikult kiiresti näppe liigutada ehk siis nii kiiresti kui võimalik,
             ilma eksimusteta, kribada ekraanil kuvatud sõna. </p>
       <br>
-        <p>Elusid on 10, ning raskusastme valkust sõltub,
-                kui palju aega sulle ühe sõna kirjutamiseks antakse.</p>
+        <p>Mängu raskusastmest sõltub, kui palju aega sulle ühe mängu läbimiseks antakse. Ühes mängus on 10 elu, iga valesti sisestatud täht on -1 elu.</p>
+      <br>
+        <p>Kerge = 100 sek. Keskmine = 70 sek. Raske = 50 sek.</p>
     </div>
     <div id="playerName">
       <input id="nameField" type="text" placeholder="Sisesta nimi">
@@ -36,6 +38,15 @@
       <button onclick="startGameEasy()">LIHTNE</button>
       <button onclick="startGameMedium()">KESKMNE</button>
       <button onclick="startGameHard()">RASKE</button>
+	  <br>
+	  <button onclick="showHighScores()">EDETABEL</button>
+	  <br>
+	  <table id="leaderboard" class="hidden" cellpadding="10">
+		<tr>
+			<th>Nimi</th>
+			<th>Skoor</th>
+		</tr>
+	  </table>
     </div>
     <button type="button" class="btn" name="night_mode" onclick="changeMode()" title="Switch mode">Day/night mode</button>
   </body>

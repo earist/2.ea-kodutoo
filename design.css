@@ -78,6 +78,8 @@ body.dark-mode {
 	background: #474c4f;
 	background-image: linear-gradient(to bottom, #474c4f, #000000);
 	color: #ffffff;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 body.dark-mode button {
@@ -94,6 +96,8 @@ body.light-mode {
 	background: #ffffff;
 	background-image: linear-gradient(to bottom, #ffffff, #d1cdd1);
 	color: #000000;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 body.light-mode button {
@@ -104,4 +108,25 @@ body.light-mode button {
 	font-size: 20px;
 	padding: 10px 20px 10px 20px;
 	outline: none;
+}
+
+table{
+	left:50%;
+	position: relative;
+	transform: translateX(-50%);
+	margin-top: 20px;
+	font-size: 20px;
+	font-family: Courier;
+}
+table,tr,th,td{
+	border: none;/*1px solid black*/;
+}
+
+td, th{
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+.hidden{
+	display:none;
 }

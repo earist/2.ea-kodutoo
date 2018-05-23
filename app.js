@@ -1,5 +1,6 @@
 /* TYPER */
-let typer
+
+let leaderboard
 const TYPER = function () {
   if (TYPER.instance_) {
     return TYPER.instance_
@@ -98,9 +99,8 @@ TYPER.prototype = {
       console.log(this.lives)
 
       if (this.lives === 0) {
-      // GO BACK TO HOMEPAGE
         console.log('elud said otsa')
-        window.location.reload()
+        endGame()
       }
     }
   }
@@ -133,6 +133,8 @@ Word.prototype = {
     this.ctx.textAlign = 'right'
     this.ctx.font = '80px Courier'
     this.ctx.fillText('Skoor: ' + TYPER.instance_.score, this.canvas.width - 500, 100)
+
+    this.drawTimer()
   },
 
   drawTimer: function () {
@@ -162,24 +164,12 @@ function structureArrayByWordLength (words) {
 
   return tempArray
 }
-/*
-registerServiceWorker: function () {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('serviceWorker.js').then(function (registration) {
-          // Registration was successful
-          console.log('ServiceWorker registration successful: ', registration)
-        }, function (err) {
-          // registration failed :(
-          console.log('ServiceWorker registration failed: ', err)
-        })
-      }
-    } */
 
 function gameTimer () {
   (function timer1 () {
-    if (typer.time >= 0) {
-      typer.word.drawTimer()
-      typer.time -= 1
+    if (TYPER.instance_.time >= 0) {
+      TYPER.instance_.word.drawTimer()
+      TYPER.instance_.time -= 1
       setTimeout(timer1, 1000)
     } else {
       endGame()
@@ -188,6 +178,23 @@ function gameTimer () {
 }
 
 function endGame () {
+  if (typeof (Storage) !== 'undefined') {
+    let playersArr = localStorage.getItem('playersArr')
+    let player = new Object()
+    player.name = name
+    player.score = TYPER.instance_.score < 0 ? 0 : TYPER.instance_.score
+    if (playersArr === null) {
+      playersArr = new Array()
+      playersArr.push(player)
+      console.log(playersArr)
+      localStorage.setItem('playersArr', JSON.stringify(playersArr))
+    } else {
+      playersArr = JSON.parse(playersArr)
+      playersArr.push(player)
+      localStorage.setItem('playersArr', JSON.stringify(playersArr))
+    }
+  }
+
   window.location.reload()
   // MÄNGU LÕPP
 }
@@ -197,7 +204,7 @@ let name = ''
 function startGameEasy () {
   if (document.querySelector('#nameField').value !== '') {
     name = document.querySelector('#nameField').value
-    document.querySelector('body').innerHTML = '<canvas></canvas>'
+    document.querySelector('body').innerHTML = '<canvas></canvas><button type="button" class="btn" name="night_mode" onclick="changeMode()" title="Switch mode">Day/night mode</button>'
     this.timeValue = 100
     console.log(timeValue)
     const typer = new TYPER()
@@ -211,7 +218,7 @@ function startGameEasy () {
 function startGameMedium () {
   if (document.querySelector('#nameField').value !== '') {
     name = document.querySelector('#nameField').value
-    document.querySelector('body').innerHTML = '<canvas></canvas>'
+    document.querySelector('body').innerHTML = '<canvas></canvas><button type="button" class="btn" name="night_mode" onclick="changeMode()" title="Switch mode">Day/night mode</button>'
     this.timeValue = 70
     const typer = new TYPER()
     window.typer = typer
@@ -224,7 +231,7 @@ function startGameMedium () {
 function startGameHard () {
   if (document.querySelector('#nameField').value !== '') {
     name = document.querySelector('#nameField').value
-    document.querySelector('body').innerHTML = '<canvas></canvas>'
+    document.querySelector('body').innerHTML = '<canvas></canvas><button type="button" class="btn" name="night_mode" onclick="changeMode()" title="Switch mode">Day/night mode</button>'
     this.timeValue = 50
     const typer = new TYPER()
     window.typer = typer
@@ -232,6 +239,11 @@ function startGameHard () {
   } else {
     alert('Palun sisesta mängimiseks oma nimi.')
   }
+}
+
+function showHighScores () {
+  let leaderboard = document.getElementById('leaderboard')
+  leaderboard.classList.toggle('hidden')
 }
 
 /* HEADER efect */
@@ -275,6 +287,28 @@ document.addEventListener('DOMContentLoaded', function (event) {
       })
     }
   }
+
+  function initScore () {
+    if (typeof (Storage) !== 'undefined') {
+      let playersArr = localStorage.getItem('playersArr')
+
+      if (playersArr === null) {
+        leaderboard.innerHTML = 'Ühtegi kirjet pole!'
+      } else {
+        playersArr = JSON.parse(playersArr)
+        for (let item of playersArr) {
+          leaderboard.innerHTML += '<tr>' +
+										'<td>' + item.name + '</td>' +
+										'<td>' + item.score + '</td>' +
+									  '</tr>'
+        }
+      }
+    } else {
+      leaderboard.innerHTML = 'Teie lehitseja ei toeta skoori!'
+    }
+  }
+
   // start the text animation
+  initScore()
   StartTextAnimation(0)
 })
