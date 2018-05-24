@@ -1,5 +1,5 @@
 # 2. kodutöö – kirjutamise mängu täiendamine
-Autorid: Ea Rist & Marianne Kristiina Orusalu & Henrik Romanenkov
+Autorid: Ea Rist ja Marianne Kristiina Orusalu ja Henrik Romanenkov
 
 ![skeem](https://github.com/earist/2.ea-kodutoo/blob/master/skeem.png)
 

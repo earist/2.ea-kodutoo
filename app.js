@@ -1,6 +1,6 @@
 /* TYPER */
 let typer
-
+let leaderboard
 const TYPER = function () {
   if (TYPER.instance_) {
     return TYPER.instance_
@@ -107,8 +107,8 @@ TYPER.prototype = {
 }
 /* Day-night */
 function changeMode () {
-  var body = document.getElementById('body')
-  var currentClass = body.className
+  let body = document.getElementById('body')
+  let currentClass = body.className
   body.className = currentClass === 'dark-mode' ? 'light-mode' : 'dark-mode'
   console.log(currentClass)
 }
@@ -183,7 +183,7 @@ function endGame () {
     let player = new Object()
     player.name = name
     player.score = TYPER.instance_.score < 0 ? 0 : TYPER.instance_.score
-    if (playersArr === null) {
+    if (!playersArr) {
       playersArr = new Array()
       playersArr.push(player)
       console.log(playersArr)
@@ -230,6 +230,7 @@ function startGameMedium () {
 
 function startGameHard () {
   if (document.querySelector('#nameField').value !== '') {
+    alert('Palun sisesta mängimiseks oma nimi.')
     name = document.querySelector('#nameField').value
     document.querySelector('body').innerHTML = '<canvas></canvas><button type="button" class="btn" name="night_mode" onclick="changeMode()" title="Switch mode">Day/night mode</button>'
     this.timeValue = 50
